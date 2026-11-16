@@ -15,7 +15,7 @@ export function NotificationsBell() {
   const unread = data.filter((n) => !n.read_at).length;
 
   const markAll = async () => {
-    await supabase.rpc("mark_notifications_read", { _ids: undefined as unknown as string[] });
+    await supabase.rpc("mark_notifications_read", { _ids: data.filter((n) => !n.read_at).map((n) => n.id) });
     void queryClient.invalidateQueries({ queryKey: ["notifications"] });
   };
 
