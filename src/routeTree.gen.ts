@@ -13,7 +13,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedShellRouteImport } from './routes/_authenticated/_shell'
+import { Route as AuthenticatedShellAdminRouteImport } from './routes/_authenticated/_shell/admin'
+import { Route as AuthenticatedShellCouriersRouteImport } from './routes/_authenticated/_shell/couriers'
 import { Route as AuthenticatedShellDashboardRouteImport } from './routes/_authenticated/_shell/dashboard'
+import { Route as AuthenticatedShellDeliveriesRouteImport } from './routes/_authenticated/_shell/deliveries'
+import { Route as AuthenticatedShellPaymentsRouteImport } from './routes/_authenticated/_shell/payments'
+import { Route as AuthenticatedShellProcurementRouteImport } from './routes/_authenticated/_shell/procurement'
+import { Route as AuthenticatedShellProfileRouteImport } from './routes/_authenticated/_shell/profile'
+import { Route as AuthenticatedShellOrdersIndexRouteImport } from './routes/_authenticated/_shell/orders.index'
+import { Route as AuthenticatedShellOrdersOrderIdRouteImport } from './routes/_authenticated/_shell/orders.$orderId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,22 +41,85 @@ const AuthenticatedShellRoute = AuthenticatedShellRouteImport.update({
   id: '/_shell',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedShellAdminRoute = AuthenticatedShellAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedShellRoute,
+} as any)
+const AuthenticatedShellCouriersRoute =
+  AuthenticatedShellCouriersRouteImport.update({
+    id: '/couriers',
+    path: '/couriers',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
 const AuthenticatedShellDashboardRoute =
   AuthenticatedShellDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
     getParentRoute: () => AuthenticatedShellRoute,
   } as any)
+const AuthenticatedShellDeliveriesRoute =
+  AuthenticatedShellDeliveriesRouteImport.update({
+    id: '/deliveries',
+    path: '/deliveries',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
+const AuthenticatedShellPaymentsRoute =
+  AuthenticatedShellPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
+const AuthenticatedShellProcurementRoute =
+  AuthenticatedShellProcurementRouteImport.update({
+    id: '/procurement',
+    path: '/procurement',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
+const AuthenticatedShellProfileRoute =
+  AuthenticatedShellProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
+const AuthenticatedShellOrdersIndexRoute =
+  AuthenticatedShellOrdersIndexRouteImport.update({
+    id: '/orders/',
+    path: '/orders/',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
+const AuthenticatedShellOrdersOrderIdRoute =
+  AuthenticatedShellOrdersOrderIdRouteImport.update({
+    id: '/orders/$orderId',
+    path: '/orders/$orderId',
+    getParentRoute: () => AuthenticatedShellRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedShellAdminRoute
+  '/couriers': typeof AuthenticatedShellCouriersRoute
   '/dashboard': typeof AuthenticatedShellDashboardRoute
+  '/deliveries': typeof AuthenticatedShellDeliveriesRoute
+  '/payments': typeof AuthenticatedShellPaymentsRoute
+  '/procurement': typeof AuthenticatedShellProcurementRoute
+  '/profile': typeof AuthenticatedShellProfileRoute
+  '/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/orders/': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedShellAdminRoute
+  '/couriers': typeof AuthenticatedShellCouriersRoute
   '/dashboard': typeof AuthenticatedShellDashboardRoute
+  '/deliveries': typeof AuthenticatedShellDeliveriesRoute
+  '/payments': typeof AuthenticatedShellPaymentsRoute
+  '/procurement': typeof AuthenticatedShellProcurementRoute
+  '/profile': typeof AuthenticatedShellProfileRoute
+  '/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/orders': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -56,20 +127,58 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/_shell': typeof AuthenticatedShellRouteWithChildren
+  '/_authenticated/_shell/admin': typeof AuthenticatedShellAdminRoute
+  '/_authenticated/_shell/couriers': typeof AuthenticatedShellCouriersRoute
   '/_authenticated/_shell/dashboard': typeof AuthenticatedShellDashboardRoute
+  '/_authenticated/_shell/deliveries': typeof AuthenticatedShellDeliveriesRoute
+  '/_authenticated/_shell/payments': typeof AuthenticatedShellPaymentsRoute
+  '/_authenticated/_shell/procurement': typeof AuthenticatedShellProcurementRoute
+  '/_authenticated/_shell/profile': typeof AuthenticatedShellProfileRoute
+  '/_authenticated/_shell/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/_authenticated/_shell/orders/': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/couriers'
+    | '/dashboard'
+    | '/deliveries'
+    | '/payments'
+    | '/procurement'
+    | '/profile'
+    | '/orders/$orderId'
+    | '/orders/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/couriers'
+    | '/dashboard'
+    | '/deliveries'
+    | '/payments'
+    | '/procurement'
+    | '/profile'
+    | '/orders/$orderId'
+    | '/orders'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/_shell'
+    | '/_authenticated/_shell/admin'
+    | '/_authenticated/_shell/couriers'
     | '/_authenticated/_shell/dashboard'
+    | '/_authenticated/_shell/deliveries'
+    | '/_authenticated/_shell/payments'
+    | '/_authenticated/_shell/procurement'
+    | '/_authenticated/_shell/profile'
+    | '/_authenticated/_shell/orders/$orderId'
+    | '/_authenticated/_shell/orders/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -108,6 +217,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShellRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/_shell/admin': {
+      id: '/_authenticated/_shell/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedShellAdminRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/couriers': {
+      id: '/_authenticated/_shell/couriers'
+      path: '/couriers'
+      fullPath: '/couriers'
+      preLoaderRoute: typeof AuthenticatedShellCouriersRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
     '/_authenticated/_shell/dashboard': {
       id: '/_authenticated/_shell/dashboard'
       path: '/dashboard'
@@ -115,15 +238,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShellDashboardRouteImport
       parentRoute: typeof AuthenticatedShellRoute
     }
+    '/_authenticated/_shell/deliveries': {
+      id: '/_authenticated/_shell/deliveries'
+      path: '/deliveries'
+      fullPath: '/deliveries'
+      preLoaderRoute: typeof AuthenticatedShellDeliveriesRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/payments': {
+      id: '/_authenticated/_shell/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof AuthenticatedShellPaymentsRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/procurement': {
+      id: '/_authenticated/_shell/procurement'
+      path: '/procurement'
+      fullPath: '/procurement'
+      preLoaderRoute: typeof AuthenticatedShellProcurementRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/profile': {
+      id: '/_authenticated/_shell/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedShellProfileRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/orders/': {
+      id: '/_authenticated/_shell/orders/'
+      path: '/orders'
+      fullPath: '/orders/'
+      preLoaderRoute: typeof AuthenticatedShellOrdersIndexRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/_shell/orders/$orderId': {
+      id: '/_authenticated/_shell/orders/$orderId'
+      path: '/orders/$orderId'
+      fullPath: '/orders/$orderId'
+      preLoaderRoute: typeof AuthenticatedShellOrdersOrderIdRouteImport
+      parentRoute: typeof AuthenticatedShellRoute
+    }
   }
 }
 
 interface AuthenticatedShellRouteChildren {
+  AuthenticatedShellAdminRoute: typeof AuthenticatedShellAdminRoute
+  AuthenticatedShellCouriersRoute: typeof AuthenticatedShellCouriersRoute
   AuthenticatedShellDashboardRoute: typeof AuthenticatedShellDashboardRoute
+  AuthenticatedShellDeliveriesRoute: typeof AuthenticatedShellDeliveriesRoute
+  AuthenticatedShellPaymentsRoute: typeof AuthenticatedShellPaymentsRoute
+  AuthenticatedShellProcurementRoute: typeof AuthenticatedShellProcurementRoute
+  AuthenticatedShellProfileRoute: typeof AuthenticatedShellProfileRoute
+  AuthenticatedShellOrdersOrderIdRoute: typeof AuthenticatedShellOrdersOrderIdRoute
+  AuthenticatedShellOrdersIndexRoute: typeof AuthenticatedShellOrdersIndexRoute
 }
 
 const AuthenticatedShellRouteChildren: AuthenticatedShellRouteChildren = {
+  AuthenticatedShellAdminRoute: AuthenticatedShellAdminRoute,
+  AuthenticatedShellCouriersRoute: AuthenticatedShellCouriersRoute,
   AuthenticatedShellDashboardRoute: AuthenticatedShellDashboardRoute,
+  AuthenticatedShellDeliveriesRoute: AuthenticatedShellDeliveriesRoute,
+  AuthenticatedShellPaymentsRoute: AuthenticatedShellPaymentsRoute,
+  AuthenticatedShellProcurementRoute: AuthenticatedShellProcurementRoute,
+  AuthenticatedShellProfileRoute: AuthenticatedShellProfileRoute,
+  AuthenticatedShellOrdersOrderIdRoute: AuthenticatedShellOrdersOrderIdRoute,
+  AuthenticatedShellOrdersIndexRoute: AuthenticatedShellOrdersIndexRoute,
 }
 
 const AuthenticatedShellRouteWithChildren =
