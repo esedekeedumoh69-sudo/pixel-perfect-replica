@@ -129,11 +129,14 @@ function RootComponent() {
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       if (isIntentionalSignOut()) return;
-      if (event === "SIGNED_OUT") {
-        // Session ended outside the app (expired or revoked): drop cached data, the gate redirects.
-        queryClient.clear();
-      }
-      router.invalidate();
+      // Defer: calling auth methods inside this callback can deadlock the auth client.
+      setTimeout(() => {
+        if (event === "SIGNED_OUT") {
+          // Session ended outside the app (expired or revoked): drop cached data, the gate redirects.
+          queryClient.clear();
+        }
+        void router.invalidate();
+      }, 0);
     });
     return () => data.subscription.unsubscribe();
   }, [queryClient, router]);

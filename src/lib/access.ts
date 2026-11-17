@@ -48,8 +48,31 @@ function isNetworkError(err: unknown) {
  * Verifies the signed-in user against the backend: active staff, has a role, and this login is
  * registered to this device and not revoked. Every backend permission check depends on this registration.
  */
-export async function establishAccess(): Promise<Access> {
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new ConnectionProblem("timeout")), ms);
+    p.then(
+      (v) => {
+        clearTimeout(t);
+        resolve(v);
+      },
+      (e) => {
+        clearTimeout(t);
+        reject(e);
+      },
+    );
+  });
+}
+
+export function establishAccess(): Promise<Access> {
+  // Never leave staff staring at a spinner: give up after 20s and show the connection screen.
+  return withTimeout(establishAccessInner(), 20_000);
+}
+
+async function establishAccessInner(): Promise<Access> {
   if (typeof navigator !== "undefined" && !navigator.onLine) throw new ConnectionProblem();
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData.session) throw new AccessDenied("not_signed_in");
   const { data: userData, error: userErr } = await supabase.auth.getUser();
   if (userErr) {
     if (isNetworkError(userErr)) throw new ConnectionProblem();

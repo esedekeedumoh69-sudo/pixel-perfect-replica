@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { Loader2, RefreshCw, ServerCrash, WifiOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { AccessDenied, ConnectionProblem, accessQueryOptions } from "@/lib/access";
+import { AccessDenied, ConnectionProblem, accessQueryOptions, markIntentionalSignOut } from "@/lib/access";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/office/Logo";
 
@@ -14,7 +14,11 @@ export const Route = createFileRoute("/_authenticated")({
     } catch (err) {
       if (err instanceof AccessDenied) {
         context.queryClient.removeQueries({ queryKey: ["access"] });
-        await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+        if (err.reason !== "not_signed_in") {
+          markIntentionalSignOut(true);
+          await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+          markIntentionalSignOut(false);
+        }
         throw redirect({
           to: "/auth",
           search: err.reason === "not_signed_in" ? {} : { reason: err.reason },
