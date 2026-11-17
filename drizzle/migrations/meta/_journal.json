@@ -8,6 +8,13 @@
       "when": 1794825783920,
       "tag": "0000_lightgrab_foundation",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794954509404,
+      "tag": "0001_fix_session_registration_and_bootstrap",
+      "breakpoints": true
     }
   ]
 }

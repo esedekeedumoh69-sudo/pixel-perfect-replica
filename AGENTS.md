@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## LightGrab Office rules
+- Every staff login must call `register_device_session` before any data access; RLS (`is_active_staff`/`has_permission`) requires the JWT `session_id` to match an active `device_sessions` row. Why: per-device revocation and suspension are enforced in the database, not the UI.
+- Business writes go through SECURITY DEFINER RPCs that call `require_permission`; tables only grant SELECT to `authenticated`. Why: the backend, not the client, authorises every operation.
+- Money is stored as integer kobo; order totals are computed only by `recompute_order_totals`. Why: one source of truth across Office, Admin, Customer and Courier apps.
