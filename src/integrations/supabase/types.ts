@@ -836,6 +836,10 @@ export type Database = {
         Args: { _assignment_id: string; _reason: string }
         Returns: undefined
       }
+      complete_procurement: {
+        Args: { _note?: string; _order_id: string }
+        Returns: undefined
+      }
       current_auth_session_id: { Args: never; Returns: string }
       dashboard_summary: { Args: never; Returns: Json }
       end_device_session: { Args: never; Returns: undefined }

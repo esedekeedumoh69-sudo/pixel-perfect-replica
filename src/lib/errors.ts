@@ -26,6 +26,12 @@ const MESSAGES: Record<string, string> = {
   invalid_name: "Enter your full name (at least 2 characters).",
   invalid_phone: "Phone number is too long.",
   notes_too_long: "Notes are too long.",
+  order_not_in_procurement: "This order is not in procurement any more.",
+  order_has_no_items: "This order has no items.",
+  items_still_pending: "Some items are still marked \"Not yet bought\". Record every item first.",
+  substitutions_pending: "A substitution is still waiting for the customer's answer.",
+  item_not_found: "This item no longer exists.",
+  invalid_approval: "Choose approved or rejected.",
 };
 
 export function friendlyError(err: unknown): string {

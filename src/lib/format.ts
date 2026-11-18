@@ -40,3 +40,19 @@ export function previewTotals(subtotalKobo: number, serviceFeeBps: number, couri
     total: Math.max(0, subtotalKobo + service + courierFeeKobo - discountKobo),
   };
 }
+
+export function timeAgo(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs} h ago`;
+  return `${Math.round(hrs / 24)} d ago`;
+}
+
+/** Kobo → plain naira string for an input field ("1500.5"). */
+export function koboToInput(kobo: number | null | undefined): string {
+  if (kobo === null || kobo === undefined) return "";
+  return String(Number(kobo) / 100);
+}

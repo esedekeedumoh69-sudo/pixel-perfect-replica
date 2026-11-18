@@ -15,6 +15,13 @@
       "when": 1794954509404,
       "tag": "0001_fix_session_registration_and_bootstrap",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794964025720,
+      "tag": "0002_complete_procurement",
+      "breakpoints": true
     }
   ]
 }
