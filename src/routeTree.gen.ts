@@ -20,8 +20,10 @@ import { Route as AuthenticatedShellDeliveriesRouteImport } from './routes/_auth
 import { Route as AuthenticatedShellPaymentsRouteImport } from './routes/_authenticated/_shell/payments'
 import { Route as AuthenticatedShellProcurementRouteImport } from './routes/_authenticated/_shell/procurement'
 import { Route as AuthenticatedShellProfileRouteImport } from './routes/_authenticated/_shell/profile'
+import { Route as AuthenticatedPrintMarketRouteImport } from './routes/_authenticated/print.market'
 import { Route as AuthenticatedShellOrdersIndexRouteImport } from './routes/_authenticated/_shell/orders.index'
 import { Route as AuthenticatedShellOrdersOrderIdRouteImport } from './routes/_authenticated/_shell/orders.$orderId'
+import { Route as AuthenticatedPrintOrderOrderIdRouteImport } from './routes/_authenticated/print.order.$orderId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +84,12 @@ const AuthenticatedShellProfileRoute =
     path: '/profile',
     getParentRoute: () => AuthenticatedShellRoute,
   } as any)
+const AuthenticatedPrintMarketRoute =
+  AuthenticatedPrintMarketRouteImport.update({
+    id: '/print/market',
+    path: '/print/market',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedShellOrdersIndexRoute =
   AuthenticatedShellOrdersIndexRouteImport.update({
     id: '/orders/',
@@ -94,6 +102,12 @@ const AuthenticatedShellOrdersOrderIdRoute =
     path: '/orders/$orderId',
     getParentRoute: () => AuthenticatedShellRoute,
   } as any)
+const AuthenticatedPrintOrderOrderIdRoute =
+  AuthenticatedPrintOrderOrderIdRouteImport.update({
+    id: '/print/order/$orderId',
+    path: '/print/order/$orderId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -105,7 +119,9 @@ export interface FileRoutesByFullPath {
   '/payments': typeof AuthenticatedShellPaymentsRoute
   '/procurement': typeof AuthenticatedShellProcurementRoute
   '/profile': typeof AuthenticatedShellProfileRoute
+  '/print/market': typeof AuthenticatedPrintMarketRoute
   '/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/print/order/$orderId': typeof AuthenticatedPrintOrderOrderIdRoute
   '/orders/': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -118,7 +134,9 @@ export interface FileRoutesByTo {
   '/payments': typeof AuthenticatedShellPaymentsRoute
   '/procurement': typeof AuthenticatedShellProcurementRoute
   '/profile': typeof AuthenticatedShellProfileRoute
+  '/print/market': typeof AuthenticatedPrintMarketRoute
   '/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/print/order/$orderId': typeof AuthenticatedPrintOrderOrderIdRoute
   '/orders': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRoutesById {
@@ -134,7 +152,9 @@ export interface FileRoutesById {
   '/_authenticated/_shell/payments': typeof AuthenticatedShellPaymentsRoute
   '/_authenticated/_shell/procurement': typeof AuthenticatedShellProcurementRoute
   '/_authenticated/_shell/profile': typeof AuthenticatedShellProfileRoute
+  '/_authenticated/print/market': typeof AuthenticatedPrintMarketRoute
   '/_authenticated/_shell/orders/$orderId': typeof AuthenticatedShellOrdersOrderIdRoute
+  '/_authenticated/print/order/$orderId': typeof AuthenticatedPrintOrderOrderIdRoute
   '/_authenticated/_shell/orders/': typeof AuthenticatedShellOrdersIndexRoute
 }
 export interface FileRouteTypes {
@@ -149,7 +169,9 @@ export interface FileRouteTypes {
     | '/payments'
     | '/procurement'
     | '/profile'
+    | '/print/market'
     | '/orders/$orderId'
+    | '/print/order/$orderId'
     | '/orders/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -162,7 +184,9 @@ export interface FileRouteTypes {
     | '/payments'
     | '/procurement'
     | '/profile'
+    | '/print/market'
     | '/orders/$orderId'
+    | '/print/order/$orderId'
     | '/orders'
   id:
     | '__root__'
@@ -177,7 +201,9 @@ export interface FileRouteTypes {
     | '/_authenticated/_shell/payments'
     | '/_authenticated/_shell/procurement'
     | '/_authenticated/_shell/profile'
+    | '/_authenticated/print/market'
     | '/_authenticated/_shell/orders/$orderId'
+    | '/_authenticated/print/order/$orderId'
     | '/_authenticated/_shell/orders/'
   fileRoutesById: FileRoutesById
 }
@@ -266,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShellProfileRouteImport
       parentRoute: typeof AuthenticatedShellRoute
     }
+    '/_authenticated/print/market': {
+      id: '/_authenticated/print/market'
+      path: '/print/market'
+      fullPath: '/print/market'
+      preLoaderRoute: typeof AuthenticatedPrintMarketRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/_shell/orders/': {
       id: '/_authenticated/_shell/orders/'
       path: '/orders'
@@ -279,6 +312,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/orders/$orderId'
       preLoaderRoute: typeof AuthenticatedShellOrdersOrderIdRouteImport
       parentRoute: typeof AuthenticatedShellRoute
+    }
+    '/_authenticated/print/order/$orderId': {
+      id: '/_authenticated/print/order/$orderId'
+      path: '/print/order/$orderId'
+      fullPath: '/print/order/$orderId'
+      preLoaderRoute: typeof AuthenticatedPrintOrderOrderIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
@@ -312,10 +352,14 @@ const AuthenticatedShellRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedShellRoute: typeof AuthenticatedShellRouteWithChildren
+  AuthenticatedPrintMarketRoute: typeof AuthenticatedPrintMarketRoute
+  AuthenticatedPrintOrderOrderIdRoute: typeof AuthenticatedPrintOrderOrderIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedShellRoute: AuthenticatedShellRouteWithChildren,
+  AuthenticatedPrintMarketRoute: AuthenticatedPrintMarketRoute,
+  AuthenticatedPrintOrderOrderIdRoute: AuthenticatedPrintOrderOrderIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

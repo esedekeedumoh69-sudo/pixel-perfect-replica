@@ -24,7 +24,7 @@ export function OrderStatusDialog({
   const [note, setNote] = useState("");
   const save = useAction(
     (v: { status: OrderStatus; note: string }) =>
-      supabase.rpc("update_order_status", { _order_id: orderId, _status: v.status, _note: v.note || undefined }),
+      supabase.rpc("update_order_status", { _order_id: orderId, _status: v.status, ...(v.note ? { _note: v.note } : {}) }),
     { success: "Order status updated", invalidate: ["orders", "dashboard", "deliveries"] },
   );
   const targets = MANUAL_STATUS_TARGETS.filter((s) => s !== current);

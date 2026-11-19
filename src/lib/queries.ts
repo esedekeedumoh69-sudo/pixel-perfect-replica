@@ -37,15 +37,19 @@ export const dashboardQuery = () =>
 export const settingsQuery = () =>
   queryOptions({
     queryKey: ["settings"],
-    queryFn: () => unwrap(supabase.from("app_settings").select("*").eq("id", 1).single()),
+    queryFn: async () => {
+      const { data, error } = await supabase.from("app_settings").select("*").eq("id", 1).single();
+      if (error) throw new Error(error.message);
+      return data;
+    },
   });
 
 const ORDER_LIST_SELECT =
   "id, order_number, status, payment_method, payment_status, total_kobo, goods_subtotal_kobo, delivery_address, created_at, updated_at, assigned_courier_id, is_test, customer:customers(full_name, phone), order_items(count)";
 
 export interface OrderFilters {
-  statuses?: OrderStatus[];
-  payment?: PaymentStatus | "all";
+  statuses?: OrderStatus[] | undefined;
+  payment?: PaymentStatus | "all" | undefined;
 }
 
 export const ordersQuery = (filters: OrderFilters = {}) =>
@@ -59,26 +63,38 @@ export const ordersQuery = (filters: OrderFilters = {}) =>
     },
   });
 
+export async function fetchOrderDetail(orderId: string) {
+  const { data: order, error } = await supabase
+    .from("orders")
+    .select(
+      "*, customer:customers(id, full_name, phone, email), courier:couriers(id, full_name, phone, vehicle), procurement:procurement_assignments(*)",
+    )
+    .eq("id", orderId)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!order) return null;
+  const [items, events] = await Promise.all([
+    unwrap(supabase.from("order_items").select("*").eq("order_id", orderId).order("position").order("name")),
+    unwrap(supabase.from("order_events").select("*").eq("order_id", orderId).order("created_at", { ascending: false })),
+  ]);
+  return { order, items, events };
+}
+export type OrderDetail = NonNullable<Awaited<ReturnType<typeof fetchOrderDetail>>>;
+
 export const orderDetailQuery = (orderId: string) =>
+  queryOptions({ queryKey: ["orders", "detail", orderId], queryFn: () => fetchOrderDetail(orderId) });
+
+export const marketListQuery = (ids: string[]) =>
   queryOptions({
-    queryKey: ["orders", "detail", orderId],
-    queryFn: async () => {
-      const order = await unwrap(
+    queryKey: ["orders", "market", ids],
+    queryFn: () =>
+      unwrap(
         supabase
           .from("orders")
-          .select(
-            "*, customer:customers(id, full_name, phone, email), courier:couriers(id, full_name, phone, vehicle), procurement:procurement_assignments(*)",
-          )
-          .eq("id", orderId)
-          .maybeSingle(),
-      );
-      if (!order) return null;
-      const [items, events] = await Promise.all([
-        unwrap(supabase.from("order_items").select("*").eq("order_id", orderId).order("position").order("name")),
-        unwrap(supabase.from("order_events").select("*").eq("order_id", orderId).order("created_at", { ascending: false })),
-      ]);
-      return { order, items, events };
-    },
+          .select("id, order_number, customer_instructions, procurement_notes, procurement:procurement_assignments(runner_name, instructions), order_items(id, name, quantity, unit, position, availability)")
+          .in("id", ids)
+          .order("created_at"),
+      ),
   });
 
 export const orderPaymentsQuery = (orderId: string) =>

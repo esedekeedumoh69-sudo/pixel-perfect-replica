@@ -45,7 +45,7 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useAccess } from "@/hooks/use-access";
 import { useAction } from "@/hooks/use-action";
-import { orderDeliveryQuery, orderDetailQuery, orderPaymentsQuery, settingsQuery } from "@/lib/queries";
+import { type OrderDetail, orderDeliveryQuery, orderDetailQuery, orderPaymentsQuery, settingsQuery } from "@/lib/queries";
 import { formatDateTime, formatNaira, formatQty } from "@/lib/format";
 import { ORDER_STATUS_META, PAYMENT_STATUS_META } from "@/lib/status";
 import type { Tables } from "@/integrations/supabase/types";
@@ -143,7 +143,7 @@ function OrderBody() {
   );
 }
 
-type OrderRow = NonNullable<Awaited<ReturnType<NonNullable<ReturnType<typeof orderDetailQuery>["queryFn"]>>>>["order"];
+type OrderRow = OrderDetail["order"];
 
 function PrintMenu({ orderId }: { orderId: string }) {
   return (
