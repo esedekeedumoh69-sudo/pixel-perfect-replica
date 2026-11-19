@@ -124,14 +124,14 @@ function OrderBody() {
         </div>
       )}
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div className="min-w-0 space-y-6">
           <ShoppingList order={order} items={items} canRecord={canRecord} />
           <Totals order={order} />
           <Notes order={order} />
           <History events={events} />
         </div>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <CustomerCard order={order} />
           <DeliveryCard order={order} />
           <ProcurementCard order={order} items={items} />

@@ -36,10 +36,10 @@ function MarketList() {
           <section key={o.id} className="mb-6 break-inside-avoid">
             <h2 className="mb-1 font-mono text-base font-bold">{o.order_number}{o.procurement?.runner_name && <span className="ml-2 font-sans text-sm font-normal">Runner: {o.procurement.runner_name}</span>}</h2>
             <table className="w-full border-collapse">
-              <thead><tr className="border-b text-left"><th className="w-8 py-1">✓</th><th className="py-1">Item</th><th className="py-1 text-right">Qty</th><th className="py-1">Unit</th><th className="w-28 py-1">Price paid</th></tr></thead>
+              <thead><tr className="border-b text-left"><th className="w-8 py-1">✓</th><th className="py-1">Item</th><th className="py-1 pr-3 text-right">Qty</th><th className="py-1">Unit</th><th className="w-28 py-1">Price paid</th></tr></thead>
               <tbody>
                 {[...o.order_items].sort((a, b) => a.position - b.position).filter((i) => i.availability !== "unavailable").map((i) => (
-                  <tr key={i.id} className="border-b border-dashed"><td className="py-1.5">☐</td><td className="py-1.5">{i.name}</td><td className="py-1.5 text-right">{formatQty(i.quantity)}</td><td className="py-1.5">{i.unit}</td><td className="py-1.5">______</td></tr>
+                  <tr key={i.id} className="border-b border-dashed"><td className="py-1.5">☐</td><td className="py-1.5">{i.name}</td><td className="py-1.5 pr-3 text-right">{formatQty(i.quantity)}</td><td className="py-1.5">{i.unit}</td><td className="py-1.5">______</td></tr>
                 ))}
               </tbody>
             </table>
