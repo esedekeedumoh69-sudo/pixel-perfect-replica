@@ -32,6 +32,17 @@ const MESSAGES: Record<string, string> = {
   substitutions_pending: "A substitution is still waiting for the customer's answer.",
   item_not_found: "This item no longer exists.",
   invalid_approval: "Choose approved or rejected.",
+  email_taken: "An account with this email already exists.",
+  create_failed: "The account couldn't be created. Please try again.",
+  reset_failed: "The password couldn't be changed. Please try again.",
+  invalid_courier_fee: "Enter a courier fee between ₦0 and ₦100,000.",
+  invalid_service_fee: "Enter a service fee between 0% and 50%.",
+  session_not_found: "That sign-in no longer exists.",
+  cannot_change_own_status: "You can't suspend or reactivate your own account.",
+  last_admin: "This would leave LightGrab with no active administrator.",
+  staff_not_found: "That staff account no longer exists.",
+  role_not_found: "That role no longer exists.",
+  system_role_locked: "The Administrator role can't be edited.",
 };
 
 export function friendlyError(err: unknown): string {

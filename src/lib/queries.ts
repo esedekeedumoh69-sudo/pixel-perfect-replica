@@ -248,3 +248,42 @@ export const activeStaffQuery = () =>
     queryFn: () =>
       unwrap(supabase.from("staff_profiles").select("user_id, full_name, email").eq("status", "active").order("full_name")),
   });
+
+export const staffListQuery = () =>
+  queryOptions({
+    queryKey: ["staff", "list"],
+    queryFn: () =>
+      unwrap(
+        supabase
+          .from("staff_profiles")
+          .select("*, staff_roles(role:roles(id, key, name))")
+          .order("full_name"),
+      ),
+  });
+
+export const rolesQuery = () =>
+  queryOptions({
+    queryKey: ["staff", "roles"],
+    queryFn: () => unwrap(supabase.from("roles").select("*, role_permissions(permission_key)").order("name")),
+  });
+
+export const permissionsQuery = () =>
+  queryOptions({
+    queryKey: ["staff", "permissions"],
+    queryFn: () => unwrap(supabase.from("permissions").select("*").order("category").order("key")),
+  });
+
+export const staffSessionsQuery = (userId: string) =>
+  queryOptions({
+    queryKey: ["sessions", "staff", userId],
+    queryFn: () =>
+      unwrap(
+        supabase.from("device_sessions").select("*").eq("user_id", userId).order("signed_in_at", { ascending: false }).limit(30),
+      ),
+  });
+
+export const auditQuery = () =>
+  queryOptions({
+    queryKey: ["audit"],
+    queryFn: () => unwrap(supabase.from("audit_logs").select("*").order("created_at", { ascending: false }).limit(200)),
+  });

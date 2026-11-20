@@ -813,6 +813,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      active_admin_count: { Args: never; Returns: number }
       assign_courier: {
         Args: {
           _courier_id: string
@@ -898,6 +899,26 @@ export type Database = {
         Returns: undefined
       }
       require_permission: { Args: { _permission: string }; Returns: undefined }
+      revoke_device_session: {
+        Args: { _session_id: string }
+        Returns: undefined
+      }
+      set_role_permissions: {
+        Args: { _permission_keys: string[]; _role_id: string }
+        Returns: undefined
+      }
+      set_staff_roles: {
+        Args: { _role_ids: string[]; _user_id: string }
+        Returns: undefined
+      }
+      set_staff_status: {
+        Args: {
+          _reason: string
+          _status: Database["public"]["Enums"]["staff_status"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
       set_substitution_approval: {
         Args: {
           _approval: Database["public"]["Enums"]["approval_status"]
@@ -907,6 +928,14 @@ export type Database = {
         Returns: undefined
       }
       touch_device_session: { Args: never; Returns: string }
+      update_app_settings: {
+        Args: {
+          _cash_enabled: boolean
+          _courier_fee_kobo: number
+          _service_fee_bps: number
+        }
+        Returns: undefined
+      }
       update_my_profile: {
         Args: { _full_name: string; _phone: string }
         Returns: undefined
