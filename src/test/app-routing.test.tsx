@@ -14,4 +14,16 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it.each([
+    ["/couriers", "/_authenticated/_shell/couriers"],
+    ["/deliveries", "/_authenticated/_shell/deliveries"],
+    ["/payments", "/_authenticated/_shell/payments"],
+    ["/profile", "/_authenticated/_shell/profile"],
+    ["/admin", "/_authenticated/_shell/admin"],
+  ])("matches the completed staff page at %s", (path, routeId) => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes(path).at(-1)?.routeId).toBe(routeId);
+  });
 });

@@ -12,9 +12,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useAccess } from "@/hooks/use-access";
 import { activeDeliveriesQuery, recentDeliveryEventsQuery } from "@/lib/queries";
 import { formatDateTime, timeAgo } from "@/lib/format";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/deliveries")({
-  head: () => ({ meta: [{ title: "Deliveries — LightGrab Office" }] }),
+  head: () => officeHead("Deliveries", "Track active LightGrab courier assignments, locations and delivery issues."),
   component: DeliveriesPage,
 });
 

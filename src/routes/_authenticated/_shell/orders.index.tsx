@@ -15,6 +15,7 @@ import { useAccess } from "@/hooks/use-access";
 import { ordersQuery } from "@/lib/queries";
 import { formatDateTime, formatNaira } from "@/lib/format";
 import { ORDER_STATUSES, ORDER_STATUS_META, PAYMENT_STATUS_META, type OrderStatus, type PaymentStatus } from "@/lib/status";
+import { officeHead } from "@/lib/head";
 
 const PAYMENT_KEYS = Object.keys(PAYMENT_STATUS_META) as PaymentStatus[];
 
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/_authenticated/_shell/orders/")({
     status: z.enum(ORDER_STATUSES as [OrderStatus, ...OrderStatus[]]).optional(),
     payment: z.enum(PAYMENT_KEYS as [PaymentStatus, ...PaymentStatus[]]).optional(),
   }),
-  head: () => ({ meta: [{ title: "Orders — LightGrab Office" }] }),
+  head: () => officeHead("Orders", "Search, filter and manage every LightGrab customer order."),
   component: OrdersPage,
 });
 

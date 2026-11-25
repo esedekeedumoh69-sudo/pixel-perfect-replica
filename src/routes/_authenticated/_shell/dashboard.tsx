@@ -9,9 +9,10 @@ import { useAccess } from "@/hooks/use-access";
 import { dashboardQuery, ordersQuery } from "@/lib/queries";
 import { formatDateTime, formatNaira } from "@/lib/format";
 import type { OrderStatus } from "@/lib/status";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — LightGrab Office" }] }),
+  head: () => officeHead("Dashboard", "Live LightGrab order, payment, procurement and delivery operations at a glance."),
   component: DashboardPage,
 });
 

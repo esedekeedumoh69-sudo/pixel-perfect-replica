@@ -49,9 +49,10 @@ import { type OrderDetail, orderDeliveryQuery, orderDetailQuery, orderPaymentsQu
 import { formatDateTime, formatNaira, formatQty } from "@/lib/format";
 import { ORDER_STATUS_META, PAYMENT_STATUS_META } from "@/lib/status";
 import type { Tables } from "@/integrations/supabase/types";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/orders/$orderId")({
-  head: () => ({ meta: [{ title: "Order — LightGrab Office" }] }),
+  head: () => officeHead("Order details", "Manage LightGrab order items, procurement, payment, delivery and history."),
   component: OrderPage,
 });
 

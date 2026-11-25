@@ -7,10 +7,11 @@ import { ErrorState, PermissionDenied } from "@/components/office/States";
 import { useAccess } from "@/hooks/use-access";
 import { marketListQuery } from "@/lib/queries";
 import { formatDateTime, formatQty } from "@/lib/format";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/print/market")({
   validateSearch: z.object({ ids: z.string().default("") }),
-  head: () => ({ meta: [{ title: "Market list — LightGrab Office" }] }),
+  head: () => officeHead("Market list", "Print LightGrab runner shopping lists without customer personal details."),
   component: MarketList,
 });
 

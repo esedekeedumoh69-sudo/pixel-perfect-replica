@@ -18,9 +18,10 @@ import { useAction } from "@/hooks/use-action";
 import { awaitingCourierQuery, couriersQuery } from "@/lib/queries";
 import { formatNaira, timeAgo } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/couriers")({
-  head: () => ({ meta: [{ title: "Couriers — LightGrab Office" }] }),
+  head: () => officeHead("Couriers", "Manually assign waiting LightGrab orders to approved couriers."),
   component: CouriersPage,
 });
 

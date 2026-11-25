@@ -15,9 +15,10 @@ import { useAccess } from "@/hooks/use-access";
 import { useAction } from "@/hooks/use-action";
 import { mySessionsQuery } from "@/lib/queries";
 import type { Access } from "@/lib/access";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/profile")({
-  head: () => ({ meta: [{ title: "My profile — LightGrab Office" }] }),
+  head: () => officeHead("My profile", "Manage your LightGrab staff details, password and signed-in devices."),
   component: ProfilePage,
 });
 

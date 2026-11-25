@@ -26,9 +26,10 @@ import { formatDateTime, formatNaira, koboToInput, parseNairaToKobo } from "@/li
 import { friendlyError } from "@/lib/errors";
 import { createStaffAccount, resetStaffPassword } from "@/lib/staff-admin.functions";
 import { cn } from "@/lib/utils";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/admin")({
-  head: () => ({ meta: [{ title: "Staff & settings — LightGrab Office" }] }),
+  head: () => officeHead("Staff & settings", "Manage LightGrab staff accounts, roles, fees, cash payments and audit history."),
   component: AdminPage,
 });
 

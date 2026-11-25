@@ -13,9 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAccess } from "@/hooks/use-access";
 import { paymentsQuery, settingsQuery, unpaidOrdersQuery } from "@/lib/queries";
 import { formatDateTime, formatNaira } from "@/lib/format";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/payments")({
-  head: () => ({ meta: [{ title: "Payments — LightGrab Office" }] }),
+  head: () => officeHead("Payments", "Review LightGrab payment records, unpaid orders and manually recorded cash payments."),
   component: PaymentsPage,
 });
 

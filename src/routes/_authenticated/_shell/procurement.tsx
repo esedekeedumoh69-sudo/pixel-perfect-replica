@@ -14,9 +14,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useAccess } from "@/hooks/use-access";
 import { procurementQueueQuery } from "@/lib/queries";
 import { timeAgo } from "@/lib/format";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/_shell/procurement")({
-  head: () => ({ meta: [{ title: "Procurement — LightGrab Office" }] }),
+  head: () => officeHead("Procurement", "Assign market buying, track item progress and print LightGrab market lists."),
   component: ProcurementPage,
 });
 

@@ -9,10 +9,11 @@ import { orderDetailQuery } from "@/lib/queries";
 import { formatDateTime, formatNaira, formatQty } from "@/lib/format";
 import { AVAILABILITY_META, ORDER_STATUS_META, PAYMENT_STATUS_META } from "@/lib/status";
 import { cn } from "@/lib/utils";
+import { officeHead } from "@/lib/head";
 
 export const Route = createFileRoute("/_authenticated/print/order/$orderId")({
   validateSearch: z.object({ doc: z.enum(["summary", "receipt"]).default("summary"), size: z.enum(["a4", "80mm"]).default("a4") }),
-  head: () => ({ meta: [{ title: "Print — LightGrab Office" }] }),
+  head: () => officeHead("Print order", "Print a LightGrab order summary or customer receipt in A4 or 80mm format."),
   component: PrintOrder,
 });
 
